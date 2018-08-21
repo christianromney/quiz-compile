@@ -1,0 +1,15 @@
+/target
+/classes
+/checkouts
+pom.xml
+pom.xml.asc
+*.jar
+*.class
+/.lein-*
+/.nrepl-port
+.hgignore
+.hg/
+*.aiff
+.mp3
+*.mp3
+*.out

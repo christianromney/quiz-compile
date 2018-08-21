@@ -1,0 +1,29 @@
+What is the standard unit of measure of current?
++ amps
+- volts
+- ohms
+
+What kind of charge do electrons carry?
+- no charge
++ negative charge
+- positive charge
+
+What physical property is measured in ohms?
+- voltage
+- current
++ resistance
+
+How should resistance be calculated when resistors are connected in series?
+- multiplied
++ summed
+- divided
+
+What law equates voltage to current times resistance?
++ Ohm's Law
+- Newton's Law
+- Kirchoff's Resistance Law
+
+What is the unit of measure for capacitance?
+- capacitors
++ farads
+- radians
