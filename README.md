@@ -15,6 +15,9 @@ Install Clojure and Lame.
 
     $ lein do clean, run [voice] [question bank]
 
+Each question from the question bank will be compiled to an MP3 file in a
+subfolder corresponding to the correct answer under the `target` directory.
+
 ## Options
 
 * `[voice]` - the name of an installed Voice Over voice (defaults to Serena)
