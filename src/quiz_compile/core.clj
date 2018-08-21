@@ -57,9 +57,8 @@
   [ast]
   (letfn [(assemble-answer
             [answer]
-            (format "\"%s\", %s"
-                    (:choice answer)
-                    (:text answer)))
+            (format "\"%s\", %s" (:choice answer) (:text answer)))
+
           (assemble-answers
             [data]
             (let [assembled (map assemble-answer (:answers data))]
@@ -111,9 +110,11 @@
                 mp3-file  (str file-base ".mp3")]
             (println "Compiling" mp3-file)
             (create-directories! text-file)
+
             (write-text-file! text-file (first qs))
             (write-intermediate-audio! voice text-file aiff-file)
             (write-compressed-audio! aiff-file mp3-file)
+
             (recur (rest qs) (inc idx))))))
     data))
 

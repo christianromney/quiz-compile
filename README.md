@@ -7,9 +7,9 @@ user input through push buttons (like a simple modern Speak 'N Spell).
 
 ## Dependencies
 
-Install Clojure and Lame.
+Install Clojure, Leiningen, and Lame.
 
-    $ brew install clojure lame
+    $ brew install clojure leiningen lame
 
 ## Usage
 
