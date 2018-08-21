@@ -23,6 +23,7 @@ Install Clojure and Lame.
   **resources/input** to compile (defaults to electrical-engineering).
 
 Run `say -v '?'` at the command line to see installed voices.
+
 Tip: I've found slowing the Rate to 33 sounds better than the default.
 
 ## DSL Example
@@ -50,6 +51,10 @@ What physical property is measured in ohms?
 + resistance
 
 ```
+
+## Sample Output
+
+[MP3](http://christianromney.org.s3.amazonaws.com/quiz/q1.mp3)
 
 ## License
 
