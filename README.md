@@ -26,7 +26,8 @@ subfolder corresponding to the correct answer under the `target` directory.
 
 Run `say -v '?'` at the command line to see installed voices.
 
-Tip: I've found slowing the Rate to 33 sounds better than the default.
+Tip: I've found slowing the speech rate to 33 in the Voice Over utility sounds
+better than the default setting.
 
 ## DSL Example
 
