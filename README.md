@@ -1,7 +1,7 @@
 # Quiz Compiler
 
 Compiles input files written in a simple, custom DSL to MP3 audio files.
-Currently only works on Mac OS X. I use these files to power a physical
+**Currently only works on Mac OS X.** I use these files to power a physical
 computing project based on Raspberry PI that plays the audio and collects
 user input through push buttons (like a simple modern Speak 'N Spell).
 
@@ -10,7 +10,6 @@ user input through push buttons (like a simple modern Speak 'N Spell).
 Install Clojure and Lame.
 
     $ brew install clojure lame
-
 
 ## Usage
 
