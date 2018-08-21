@@ -18,13 +18,13 @@
 ;; -- API --
 
 (defn read-source
-  "Reads an input resource file containing data in our question/answer DSL from
-  the input resource folder. Returns sequences of questions and answers."
-  [bank]
+  "Reads an input file containing data in our question/answer DSL. Returns
+  sequences of questions and answers."
+  [file]
   (let [has-content? (complement str/blank?)]
-    (with-open [rdr (io/reader (io/resource (format "input/%s.txt" bank)))]
-      (let [data (partition-by has-content? (line-seq rdr))]
-        (filterv (comp has-content? first) data)))))
+    (with-open [rdr (io/reader file)]
+      (filterv (comp has-content? first)
+               (partition-by has-content? (line-seq rdr))))))
 
 (defn parse
   "Parses a sequence of question and answer sequences into data structures
@@ -95,36 +95,32 @@
 
           (write-compressed-audio!
             [in-file out-file]
-            (sh "lame" "-m" "m" in-file out-file))]
-    (let [bank-base (format "target/%s/%s" bank "topic")
-          bank-text (str bank-base ".out")
-          bank-aiff (str bank-base ".aiff")
-          bank-mp3  (str bank-base ".mp3")]
-      (create-directories! bank-text)
-      (write-text-file! bank-text (str/replace bank  #"\W" " "))
-      (write-intermediate-audio! voice bank-text bank-aiff)
-      (write-compressed-audio! bank-aiff bank-mp3)
+            (sh "lame" "-m" "m" in-file out-file))
 
-      (doseq [[folder questions] data]
-        (loop [qs questions idx 1]
-          (if-not (seq qs)
-            :done
-            (let [file-base (format "target/%s/%s/q%s"
-                                    (str/lower-case bank)
-                                    (str/lower-case folder)
-                                    idx)
-                  text-file (str file-base ".out")
-                  aiff-file (str file-base ".aiff")
-                  mp3-file  (str file-base ".mp3")]
-              (println "Compiling" mp3-file)
-              (create-directories! text-file)
-
-              (write-text-file! text-file (first qs))
-              (write-intermediate-audio! voice text-file aiff-file)
-              (write-compressed-audio! aiff-file mp3-file)
-
-              (recur (rest qs) (inc idx))))))
-      data)))
+          (emit-files! [voice path-base data message]
+            (let [path-text (str path-base ".out")
+                  path-aiff (str path-base ".aiff")
+                  path-mp3  (str path-base ".mp3")]
+              (println message)
+              (create-directories! path-text)
+              (write-text-file! path-text data)
+              (write-intermediate-audio! voice path-text path-aiff)
+              (write-compressed-audio! path-aiff path-mp3)))]
+    (let [file-base (format "target/%s/%s" bank "topic")]
+      (emit-files! voice file-base
+                   (str/replace bank  #"\W" " ")
+                   (format "Compiling topic %s.mp3" file-base)))
+    (doseq [[folder questions] data]
+      (loop [qs questions idx 1]
+        (if-not (seq qs)
+          :done
+          (let [file-base (format "target/%s/%s/q%s"
+                                 (str/lower-case bank)
+                                 (str/lower-case folder) idx)
+                message  (format "Compiling %s.mp3" file-base)]
+            (emit-files! voice file-base (first qs) message)
+            (recur (rest qs) (inc idx))))))
+    data))
 
 ;; -- runner --
 
@@ -138,6 +134,8 @@
     (println (format "Compiling %s questions to spoken audio read by %s..." bank voice))
 
     (->> bank
+         (format "input/%s.txt")
+         io/resource
          read-source
          parse
          compile-ast
