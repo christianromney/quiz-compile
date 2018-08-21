@@ -52,6 +52,8 @@ What physical property is measured in ohms?
 
 ```
 
+[Source file](https://github.com/christianromney/quiz-compile/blob/master/resources/input/electrical-engineering.txt)
+
 ## Sample Output
 
 [MP3](http://christianromney.org.s3.amazonaws.com/quiz/q1.mp3)
