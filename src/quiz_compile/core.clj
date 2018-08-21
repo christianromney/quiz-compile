@@ -73,7 +73,6 @@
                    " Is it: "
                    (assemble-answers data)
                    "?")]})]
-
     (reduce (partial merge-with conj) {}
             (mapv assemble-question ast))))
 
@@ -97,26 +96,35 @@
           (write-compressed-audio!
             [in-file out-file]
             (sh "lame" "-m" "m" in-file out-file))]
-    (doseq [[folder questions] data]
-      (loop [qs questions idx 1]
-        (if-not (seq qs)
-          :done
-          (let [file-base (format "target/%s/%s/q%s"
-                                  (str/lower-case bank)
-                                  (str/lower-case folder)
-                                  idx)
-                text-file (str file-base ".out")
-                aiff-file (str file-base ".aiff")
-                mp3-file  (str file-base ".mp3")]
-            (println "Compiling" mp3-file)
-            (create-directories! text-file)
+    (let [bank-base (format "target/%s/%s" bank "topic")
+          bank-text (str bank-base ".out")
+          bank-aiff (str bank-base ".aiff")
+          bank-mp3  (str bank-base ".mp3")]
+      (create-directories! bank-text)
+      (write-text-file! bank-text (str/replace bank  #"\W" " "))
+      (write-intermediate-audio! voice bank-text bank-aiff)
+      (write-compressed-audio! bank-aiff bank-mp3)
 
-            (write-text-file! text-file (first qs))
-            (write-intermediate-audio! voice text-file aiff-file)
-            (write-compressed-audio! aiff-file mp3-file)
+      (doseq [[folder questions] data]
+        (loop [qs questions idx 1]
+          (if-not (seq qs)
+            :done
+            (let [file-base (format "target/%s/%s/q%s"
+                                    (str/lower-case bank)
+                                    (str/lower-case folder)
+                                    idx)
+                  text-file (str file-base ".out")
+                  aiff-file (str file-base ".aiff")
+                  mp3-file  (str file-base ".mp3")]
+              (println "Compiling" mp3-file)
+              (create-directories! text-file)
 
-            (recur (rest qs) (inc idx))))))
-    data))
+              (write-text-file! text-file (first qs))
+              (write-intermediate-audio! voice text-file aiff-file)
+              (write-compressed-audio! aiff-file mp3-file)
+
+              (recur (rest qs) (inc idx))))))
+      data)))
 
 ;; -- runner --
 
