@@ -20,7 +20,8 @@ subfolder corresponding to the correct answer under the `target` directory.
 
 ## Options
 
-* `[voice]` - the name of an installed Voice Over voice (defaults to Serena)
+* `[voice]` - the name of an installed Voice Over voice (defaults to Samanth)
+* `[rate]`  - the rate at which the voice should speak (defaults to 30)
 * `[question bank]` - the name (minus extension) of a file under
   **resources/input** to compile (defaults to electrical-engineering).
 

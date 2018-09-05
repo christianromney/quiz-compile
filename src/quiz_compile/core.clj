@@ -80,7 +80,7 @@
   "Emits the compiled sentences as files which can be converted to audio using Mac
   OS X's command-line Voice Over utility. Drives the text-to-speech and
   conversion to mp3 by shelling out to the system."
-  [voice bank data]
+  [voice rate bank data]
   (letfn [(create-directories!
             [filename]
             (io/make-parents filename))
@@ -91,7 +91,7 @@
 
           (write-intermediate-audio!
             [voice in-file out-file]
-            (sh "say" "-v" voice "-f" in-file "-o" out-file))
+            (sh "say" "-v" voice "-r" rate "-f" in-file "-o" out-file))
 
           (write-compressed-audio!
             [in-file out-file]
@@ -125,12 +125,14 @@
 ;; -- runner --
 
 (defn -main
-  "The application entry point. Accepts two optional positional arguments:
-  the name of the Voice Over voice to use and the named question bank file
-  (minus the extension)."
+  "The application entry point. Accepts three optional positional arguments:
+  voice - the name of the Voice Over voice to use (default: Samantha)
+  rate  - the rate at which the voice should speak (default: 30)
+  topic - the named question bank file (minus the extension)."
   [& args]
-  (let [voice (or (first args) "Serena")
-        bank  (or (second args) "electrical-engineering")]
+  (let [voice (or (nth args 0) "Serena")
+        rate  (or (nth args 1) "30")
+        bank  (or (nth args 2) "electrical-engineering")]
     (println (format "Compiling %s questions to spoken audio read by %s..." bank voice))
 
     (->> bank
@@ -139,7 +141,7 @@
          read-source
          parse
          compile-ast
-         (emit voice bank))
+         (emit voice (Integet/parseInt rate) bank))
 
     (println "Done.")
     (shutdown-agents)))
