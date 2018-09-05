@@ -132,9 +132,11 @@
   rate  - the rate at which the voice should speak (default: 30)
   topic - the named question bank file (minus the extension)."
   [& args]
-  (let [voice (get args 0 "Samantha")
+  (let [args  (vec args)
+        voice (get args 0 "Samantha")
         rate  (get args 1 "30")
         bank  (get args 2 "electrical-engineering")]
+    (pprint {:args args :voice voice :rate rate :bank bank})
     (println (format "Compiling %s questions to spoken audio read by %s at rate %s ..." bank voice rate))
 
     (->> bank

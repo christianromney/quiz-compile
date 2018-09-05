@@ -1,0 +1,34 @@
+What the longest leg of a right triangle called?
++ hypotenuse
+- tangent
+- cotangent
+
+How many degrees are in a triangle?
+- 90
++ 180
+- 360
+
+What is the formula for the area of a circle?
+- 2 pi R
+- R over 2 pi
++ pi R squared
+
+How many degrees are in a circle?
+- 180
++ 360
+- 720
+
+How do you find the sine of an angle?
++ opposite over hypotenuse
+- adjacent over hypotenuse
+- opposite over adjacent
+
+How do you find the cosine of an angle?
+- opposite over hypotenuse
++ adjacent over hypotenuse
+- opposite over adjacent
+
+How do you find the tangent of an angle?
+- opposite over hypotenuse
+- adjacent over hypotenuse
++ opposite over adjacent
