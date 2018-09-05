@@ -130,9 +130,9 @@
   rate  - the rate at which the voice should speak (default: 30)
   topic - the named question bank file (minus the extension)."
   [& args]
-  (let [voice (or (nth args 0) "Serena")
-        rate  (or (nth args 1) "30")
-        bank  (or (nth args 2) "electrical-engineering")]
+  (let [voice (get args 0 "Serena")
+        rate  (get args 1 "30")
+        bank  (get args 2 "electrical-engineering")]
     (println (format "Compiling %s questions to spoken audio read by %s..." bank voice))
 
     (->> bank
