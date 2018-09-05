@@ -141,7 +141,7 @@
          read-source
          parse
          compile-ast
-         (emit voice (Integet/parseInt rate) bank))
+         (emit voice (Integer/parseInt rate) bank))
 
     (println "Done.")
     (shutdown-agents)))
