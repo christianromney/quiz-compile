@@ -1,6 +1,7 @@
 (ns quiz-compile.core
   (:require [clojure.java.io :as io]
             [clojure.java.shell :refer [sh]]
+            [clojure.pprint :refer [pprint]]
             [clojure.string :as str])
   (:gen-class))
 
@@ -90,24 +91,25 @@
             (spit filename data))
 
           (write-intermediate-audio!
-            [voice in-file out-file]
+            [voice rate in-file out-file]
+            (pprint {:voice voice :rate rate :input in-file :output out-file})
             (sh "say" "-v" voice "-r" rate "-f" in-file "-o" out-file))
 
           (write-compressed-audio!
             [in-file out-file]
             (sh "lame" "-m" "m" in-file out-file))
 
-          (emit-files! [voice path-base data message]
+          (emit-files! [voice rate path-base data message]
             (let [path-text (str path-base ".out")
                   path-aiff (str path-base ".aiff")
                   path-mp3  (str path-base ".mp3")]
-              (println message)
+
               (create-directories! path-text)
               (write-text-file! path-text data)
-              (write-intermediate-audio! voice path-text path-aiff)
+              (write-intermediate-audio! voice rate path-text path-aiff)
               (write-compressed-audio! path-aiff path-mp3)))]
     (let [file-base (format "target/%s/%s" bank "topic")]
-      (emit-files! voice file-base
+      (emit-files! voice rate file-base
                    (str/replace bank  #"\W" " ")
                    (format "Compiling topic %s.mp3" file-base)))
     (doseq [[folder questions] data]
@@ -118,7 +120,7 @@
                                  (str/lower-case bank)
                                  (str/lower-case folder) idx)
                 message  (format "Compiling %s.mp3" file-base)]
-            (emit-files! voice file-base (first qs) message)
+            (emit-files! voice rate file-base (first qs) message)
             (recur (rest qs) (inc idx))))))
     data))
 
@@ -130,10 +132,10 @@
   rate  - the rate at which the voice should speak (default: 30)
   topic - the named question bank file (minus the extension)."
   [& args]
-  (let [voice (get args 0 "Serena")
+  (let [voice (get args 0 "Samantha")
         rate  (get args 1 "30")
         bank  (get args 2 "electrical-engineering")]
-    (println (format "Compiling %s questions to spoken audio read by %s..." bank voice))
+    (println (format "Compiling %s questions to spoken audio read by %s at rate %s ..." bank voice rate))
 
     (->> bank
          (format "input/%s.txt")
@@ -141,7 +143,7 @@
          read-source
          parse
          compile-ast
-         (emit voice (Integer/parseInt rate) bank))
+         (emit voice rate bank))
 
     (println "Done.")
     (shutdown-agents)))
