@@ -16,6 +16,9 @@
            (fn [idx ascii]
              {idx (str (char ascii))}) (range A (inc Z)))))
 
+
+(defn trace [x] (pprint x) x)
+
 ;; -- API --
 
 (defn read-source
@@ -58,7 +61,7 @@
   [ast]
   (letfn [(assemble-answer
             [answer]
-            (format "\"%s\", %s" (:choice answer) (:text answer)))
+            (format "%s) %s" (str/upper-case (:choice answer)) (:text answer)))
 
           (assemble-answers
             [data]
@@ -74,7 +77,7 @@
                    " Is it: "
                    (assemble-answers data)
                    "?")]})]
-    (reduce (partial merge-with conj) {}
+    (reduce (partial merge-with into) {}
             (mapv assemble-question ast))))
 
 (defn emit
@@ -144,7 +147,9 @@
          io/resource
          read-source
          parse
+         trace
          compile-ast
+         trace
          (emit voice rate bank))
 
     (println "Done.")

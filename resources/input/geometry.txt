@@ -1,4 +1,4 @@
-What the longest leg of a right triangle called?
+What is the longest leg of a right triangle called?
 + hypotenuse
 - tangent
 - cotangent
@@ -9,7 +9,7 @@ How many degrees are in a triangle?
 - 360
 
 What is the formula for the area of a circle?
-- 2 pi R
+- 2 Pi R
 - R over 2 pi
 + pi R squared
 
