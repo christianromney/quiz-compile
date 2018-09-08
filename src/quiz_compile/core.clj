@@ -147,9 +147,7 @@
          io/resource
          read-source
          parse
-         trace
          compile-ast
-         trace
          (emit voice rate bank))
 
     (println "Done.")
