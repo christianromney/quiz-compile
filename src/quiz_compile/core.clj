@@ -76,7 +76,7 @@
              [(str (:question data)
                    " Is it: "
                    (assemble-answers data)
-                   "?")]})]
+                   "...")]})]
     (reduce (partial merge-with into) {}
             (mapv assemble-question ast))))
 
@@ -137,7 +137,7 @@
   [& args]
   (let [args  (vec args)
         voice (get args 0 "Samantha")
-        rate  (get args 1 "30")
+        rate  (get args 1 "28")
         bank  (get args 2 "electrical-engineering")]
     (pprint {:args args :voice voice :rate rate :bank bank})
     (println (format "Compiling %s questions to spoken audio read by %s at rate %s ..." bank voice rate))

@@ -1,0 +1,49 @@
+What DOM event does React use to schedule DOM manipulations?
+- DOM_ready
++ request_animation_frame
+- load
+
+How does React improve rendering performance over traditional Java script?
+- using multiple threads
+- coding in JSX
++ calculating diffs against a virtual DOM
+
+What React component function returns the content to display?
++ render
+- content
+- request_animation_frame
+
+What do you use to pass information to React components?
+- state
+- context
++ props
+
+What React lifecycle hook runs after the component has rendered?
+- component_Will_Unmount
++ component_Did_Mount
+- component_Did_Render
+
+Which of these is a good choice for a key value?
+- an item's index in a collection
+- a randomly generated value
++ a unique, non-random value
+
+Which of these is the best fit for React context?
++ remembering the current theme
+- setting the key of the component
+- setting a prop for a deeply nested component
+
+What happens if an error is not stopped at a boundary?
+- the default exception handler displays an error message
++ the component tree is unmounted
+- the React debugger is launched with a breakpoint
+
+How do you add a parent for multiple child nodes?
+- introduce a section element
+- use an unordered list partial
++ use a React fragment
+
+What is the point of static type checkers?
+- to ensure your program is bug-free
++ to catch a small class of errors at compile time
+- to improve program performance
