@@ -7,9 +7,9 @@
 
 ;; -- ASCII --
 
-(def ^:private A 65)
-(def ^:private Z 90)
-(def ^:private alphabet
+(def ^:const A 65)
+(def ^:const Z 90)
+(def ^:const alphabet
   "A map of answer indeces to a corresponding letter"
   (reduce merge
           (map-indexed
